@@ -1,0 +1,36 @@
+# VZOR Caddyfile bloku — sanitizovaný (BEZ produkčních hodnot)
+# Reverse proxy + automatické HTTPS. Routuj VŽDY na interní port kontejneru (3000),
+# NE na host mapping. Vystavuj jen služby s vlastním loginem.
+
+modul.nuart.cz {
+	reverse_proxy nazev-kontejneru:3000
+
+	# bezpečnostní hlavičky (rozumný default)
+	header {
+		Strict-Transport-Security "max-age=31536000; includeSubDomains"
+		X-Frame-Options "SAMEORIGIN"
+		X-Content-Type-Options "nosniff"
+		Referrer-Policy "strict-origin-when-cross-origin"
+		-Server
+	}
+
+	encode gzip zstd
+
+	log {
+		output file /var/log/caddy/modul.log {
+			roll_size 10mb
+			roll_keep 5
+		}
+	}
+}
+
+# Varianta path-based (modul pod /cesta na existující doméně, Next basePath, prefix se NEstripuje):
+# domena.nuart.cz {
+# 	@modul path /cesta /cesta/*
+# 	handle @modul {
+# 		reverse_proxy modul-kontejner:3000
+# 	}
+# 	handle {
+# 		reverse_proxy core-kontejner:3000
+# 	}
+# }

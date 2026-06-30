@@ -1,0 +1,25 @@
+# VZOR compose.yaml pro nový Next.js modul — sanitizovaný
+# Konvence: interní port 3000, host mapping 30xx pro debug, síť web (external),
+# secrets jen v .env (nikdy sem), healthcheck pro autoheal.
+
+services:
+  nazev-modulu:
+    build: .
+    container_name: nazev-modulu
+    restart: unless-stopped
+    env_file: .env
+    ports:
+      - "30XX:3000"          # host mapping jen pro debug; Caddy jde na interní 3000
+    networks:
+      - web
+    labels:
+      - autoheal=true
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:3000/api/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+networks:
+  web:
+    external: true
