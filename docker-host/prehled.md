@@ -14,7 +14,10 @@
 - **Dockge** — správa stacků (:5001). Běží z `/opt/dockge`, spravuje `/opt/stacks/`
   `[opraveno proti realitě 2026-06-30: dump řadil dockge mezi stacky; reálně to není
    složka v /opt/stacks/, ale samostatně v /opt/dockge]`
-- **buildx (buildkit)** — pro buildy (`buildx_buildkit_nicotrans-builder0`)
+- **buildx (buildkit)** — SDÍLENÝ perzistentní builder `nuart-builder` na síti `web`
+  (kontejner `buildx_buildkit_nuart-builder0`). Vytváří/startuje ho idempotentní
+  `/opt/stacks/infra/setup-buildx.sh` (boot přes systemd `nuart-buildx.service`).
+  Žádné per-projekt buildery. Detaily v `/opt/stacks/infra/README.md`.
 - **autoheal** — restart nezdravých kontejnerů (healthcheck-based)
 - **Konvence:** každý stack = složka v `/opt/stacks/`, vlastní `compose.yaml` + `.env`
 
@@ -31,8 +34,10 @@
 | openwebui | healthy | 3000→8080 |
 | dockge | healthy | 5001 |
 | autoheal | healthy | — |
-| buildx_buildkit_nicotrans-builder0 | up | build helper |
+| buildx_buildkit_nuart-builder0 | up | sdílený build helper (nuart-builder) |
 | valheim | Exited (7 dní) | starý/odstavený herní stack `[OVĚŘIT: zrušit?]` |
 
 `[opraveno proti realitě 2026-06-30: dump neuváděl kontejner `valheim` (odstavený)
- ani `buildx_buildkit_nicotrans-builder0`]`
+ ani buildx buildkit kontejner]`
+`[2026-06-30: per-projekt buildery (nicotrans-builder/nuartbuilder) sjednoceny do
+ jednoho sdíleného `nuart-builder` — viz /opt/stacks/infra/README.md]`
