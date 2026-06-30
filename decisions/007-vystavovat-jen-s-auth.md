@@ -1,10 +1,13 @@
-# ADR-007: Přes Caddy vystavovat jen služby s vlastním auth
+# ADR-007: Přes Caddy vystavovat jen služby s loginem (vlastním nebo přes CRM)
 
-**Rozhodnutí:** Veřejně (přes Caddy) vystavit jen službu, která má vlastní login/ochranu.
+**Rozhodnutí:** Veřejně (přes Caddy) vystavit jen službu, která je za loginem — buď má
+**vlastní auth**, nebo je **gateovaná CRM Core identitou**.
 
 **Proč:** Bezpečnost — nevystavovat nechráněné interní nástroje na internet.
 
-**Stav 2026-06-30:** `nicotrans-palety` (samo o sobě bez vlastního loginu) je sice vystaveno
-pod `crm.nuart.cz/palety`, ALE přístup je gateován **CRM Core identitou** (palety mají v `.env`
-`IDENTITY_DATABASE_URL` + `CORE_URL`). Tím je princip zachován — modul stojí za CRM loginem.
-Viz `stacks/nicotrans-palety.md`. `[OVĚŘIT, že gate skutečně chrání všechny cesty palet]`
+**Stav 2026-06-30 (potvrzeno):** `nicotrans-palety` nemá vlastní login, ALE je vystaveno
+pod `crm.nuart.cz/palety` **za CRM identitou** (`.env`: `IDENTITY_DATABASE_URL` + `CORE_URL`).
+Rozhodnuto, že **CRM identita = dostatečný login gate** — princip ADR platí, palety jsou v pořádku.
+
+Služby bez jakéhokoliv loginu se přes Caddy nevystavují (zůstávají interní / jen LAN).
+Viz `stacks/nicotrans-palety.md`, `stacks/caddy.md`.

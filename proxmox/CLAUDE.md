@@ -29,10 +29,15 @@ Vše, co běží v `docker-host/` a `stacks/`, stojí fyzicky na téhle vrstvě.
 - **GPU passthrough** (GTX 1070 → LXC 101) je křehký — Pascal + ovladač. Nesahat bez důvodu.
 - Změny zdrojů VM (RAM/CPU) často vyžadují **odstávku VM** — plánovat, ne za běhu.
 
-## Co ověřit (drift)
-> ⚠️ **Tato úroveň nebyla 2026-06-30 ověřena.** Z Docker VM (192.168.0.199) není SSH
-> přístup na `pve` (`root@192.168.0.186` → Permission denied, publickey/password).
-> Všechna Proxmox-fakta níže pocházejí z dumpu a jsou `[OVĚŘIT]` přímo na `pve`.
-- Proxmox verze (`pveversion`), zdroje VM/LXC (`qm config 100`, `pct config 101 102`)
-- RAM hardware (32 vs plánovaných 64 GB), Ollama IP (DHCP → měla dostat statickou)
-- Stav záloh (jsou vzbackup joby?), subnet renumbering (plánováno 10.44.10.0/24)
+## Stav ověření
+> ✅ **Tato úroveň byla ověřena 2026-06-30** — Daniel pustil čtecí příkazy přímo na `pve`
+> (z Docker VM tam SSH není). Výsledky zapsány do souborů níže.
+
+Hlavní zjištění: Proxmox 9.2.3, RAM stále **32 GB** (upgrade na 64 neproběhl), GPU passthrough
+do LXC 101 potvrzen, Ollama LXC stále **DHCP** (řešení: rezervace na UniFi — TODO),
+Proxmox **vzdump neběží** (jen off-site záloha dat na Wedos). Detaily: `nodes.md`,
+`hardware.md`, `vms-a-kontejnery.md`, `zalohy.md`, `sit.md`.
+
+## Otevřené TODO (z ověření)
+- Ollama statická IP (DHCP rezervace na UniFi), subnet renumbering → 10.44.10.0/24 (kvůli VPN konfliktu)
+- Rozšířit zálohu o `crm_identity` + Caddyfile, zvážit Proxmox vzdump
