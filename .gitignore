@@ -1,0 +1,19 @@
+# OS
+.DS_Store
+*.swp
+
+# deps
+node_modules/
+
+# secrets — NIKDY necommitovat
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+*.crt
+*_rsa
+*_ed25519
+id_*
+secrets/
+*.secret
