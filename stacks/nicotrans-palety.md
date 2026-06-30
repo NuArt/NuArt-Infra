@@ -9,7 +9,9 @@ Paletový systém Nicotrans (modul). Next.js + Prisma — vzor pro další modul
   `[opraveno proti realitě 2026-06-30: dump si nebyl jistý interním portem; je 3000]`
 - **Stack:** `/opt/stacks/nicotrans-palety/`
 - **DB:** `nicotrans` (uživatel `nicotrans_user`)
-- **Build helper:** `buildx_buildkit_nicotrans-builder0`
+- **Build:** přes SDÍLENÝ builder `nuart-builder` jediným skriptem
+  `/opt/stacks/infra/build-module.sh nicotrans-palety` (NE per-projekt builder).
+  `[opraveno 2026-06-30: per-projekt `nicotrans-builder` sjednocen do sdíleného `nuart-builder`]`
 
 ## Vystavení — ZMĚNA proti dumpu
 `[opraveno proti realitě 2026-06-30: dump říkal „jen interně, bez auth, schválně NEvystaveno,
