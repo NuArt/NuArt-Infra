@@ -24,23 +24,23 @@ Fyzicky 12 threadů. Rozdáno: Docker 4 + Ollama 4 + Kuma 1 = 9 vCPU (overcommit
 reálný load hostitele velmi nízký). vCPU nejsou napevno, sdílejí se.
 
 ## Monitoring (Uptime Kuma na LXC 102)
-> Ověřeno z UI 2026-06-30 (http://192.168.0.158:3001). 4 monitory, interval 60 s, všechny „Běží".
+> Ověřeno z UI 2026-06-30 (http://192.168.0.158:3001). **7 monitorů**, interval 60 s, všechny „Běží".
 
-| # | Monitor | Typ | Cíl | Uptime (1 r) |
+| # | Monitor | Typ | Cíl | Pozn. |
 |---|---|---|---|---|
-| 1 | Docker VM | Ping | 192.168.0.199 | 99.93 % |
-| 2 | Proxmox host | Ping | 192.168.0.186 | 100 % |
-| 3 | NuArt Backoffice | HTTP | http://192.168.0.199:3020/login | 99.93 % |
-| 4 | Nicotrans palety | HTTP | http://192.168.0.199:3010/ | 99.92 % |
+| 1 | Docker VM | Ping | 192.168.0.199 | |
+| 2 | Proxmox host | Ping | 192.168.0.186 | |
+| 3 | NuArt Backoffice (Interní IP) | HTTP | http://192.168.0.199:3020/login | |
+| 4 | NuArt Backoffice (Doména) | HTTP(s) | https://office.nuart.cz | ➕ 2026-06-30 (Caddy + TLS) |
+| 5 | Nicotrans CRM (crm.nuart.cz) | HTTP(s) | https://crm.nuart.cz | ➕ 2026-06-30 (Caddy + TLS; pokrývá i /palety) |
+| 6 | Nicotrans palety | HTTP | http://192.168.0.199:3010/ | interní check modulu |
+| 7 | Ollama (LXC 101) | HTTP keyword „Ollama" | http://192.168.0.154:11434 | ➕ 2026-06-30 (chytí i změnu DHCP IP) |
 
-`[opraveno proti realitě 2026-06-30: dump měl u Kumy „[OVĚŘIT co monitoruje]" — výše je realita]`
+`[opraveno proti realitě 2026-06-30: dump měl „[OVĚŘIT co monitoruje]". Nejdřív byly 4 monitory
+ (interní), poté doplněny #4/#5/#7 — CRM, veřejné domény přes Caddy (TLS) a Ollama.]`
 
-### ⚠️ Díry v monitoringu (TODO — zvážit doplnění)
-- **nicotrans-crm / crm.nuart.cz se NEmonitoruje** (živá produkce bez dohledu).
-- Monitory míří na **interní IP:porty, ne na veřejné domény přes Caddy** → nehlídá se
-  veřejná dostupnost, **TLS certifikát** ani samotný Caddy (office.nuart.cz / crm.nuart.cz zvenku).
-- Nemonitoruje se **Ollama** (192.168.0.154:11434), **infra-postgres**, **infra-minio**,
-  **Windrose**, **Dockge**.
-- U monitoru #4 (palety) UI ukazuje „Expirace Cert. 2026-09-27 (89 dní)", ač cíl je `http://…:3010`
-  (ne HTTPS) — `[OVĚŘIT konfiguraci monitoru]`.
+### Zbývající mezery (volitelné)
+- **infra-postgres (5432)** nelze monitorovat z Kumy — nemá host mapping, je dosažitelný jen
+  uvnitř docker sítě (a ven ho nechceme vystavovat).
+- **infra-minio / Windrose / Dockge** — nemonitorovány (interní, nízká priorita).
 - Notifikace (e-mail/telegram apod.) — `[OVĚŘIT: jsou nastavené?]`
