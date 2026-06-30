@@ -7,8 +7,8 @@
 - **Deska:** ASUS Z10PA-U8
 - **CPU:** Intel Xeon E5-1650 v4 (Broadwell, 6 jader / 12 threadů, AVX + AVX2)
 - **RAM:** 32 GB (dashboard pve: 31.2 GiB) ✅ ověřeno 2026-06-30.
-  `[opraveno proti realitě 2026-06-30: plánovaná výměna na 64 GB (4×8GB ECC RDIMM 2400)
-   ZATÍM NEPROBĚHLA — stále 32 GB. Zůstává jako TODO (vyžaduje odstávku)]`
+  `[opraveno proti realitě 2026-06-30: dump zmiňoval „plánovaný upgrade na 64 GB" — ve skutečnosti
+   to byl jen DOTAZ (jaké moduly by to měly být), NE plán. Žádný upgrade se nechystá. Zůstává 32 GB.]`
 - **GPU:** NVIDIA GTX 1070 8 GB (Pascal) — tvrdý strop pro AI úlohy (viz `decisions/009-ai-jen-text-modely.md`)
 - **Disk:** SSD 1.92 TB
 

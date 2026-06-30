@@ -16,17 +16,19 @@
 ### Co se zálohuje
 | Část | Jak | Pozn. |
 |---|---|---|
-| Postgres | `pg_dump --clean --if-exists` DB **nuart**, **nicotrans** | ⚠️ viz díra níže |
+| Postgres | `pg_dump --clean --if-exists` DB **nuart**, **nicotrans**, **crm_identity** | ✅ crm doplněno 2026-06-30 |
 | MinIO | `cp -a` z volume `infra_miniodata` (`/var/lib/docker/volumes/infra_miniodata/_data`) | data malá (~752 KB) |
-| Konfigy | `compose.yaml` + `.env` všech stacků + `/opt/motd` + sám skript | kód je na GitHubu, nezálohuje se |
+| Konfigy | `compose.yaml` + `.env` všech stacků + **`Caddyfile`** + `/opt/motd` + sám skript | ✅ Caddyfile doplněn 2026-06-30 |
 
-Každý běh má `MANIFEST.txt` (co je uvnitř). Ověřeno: poslední běh `run-20260630-030002`
-obsahuje `postgres/{nuart.sql, nicotrans.sql}`, `minio/`, `konfigy/stacks/*`.
+Každý běh má `MANIFEST.txt` (co je uvnitř).
 
-### ⚠️ Díra (TODO)
-- **`crm_identity` (DB CRM Core) se NEzálohuje** — `PG_DBS="nuart nicotrans"`, CRM chybí.
-  CRM je živá produkce → doplnit `crm_identity` do `PG_DBS` v `/opt/nuart-backup.sh`.
-  `[TODO: přidat crm_identity do zálohy]`
+### ✅ Vyřešeno 2026-06-30 (rozšíření skriptu)
+- `PG_DBS` rozšířeno na `nuart nicotrans crm_identity` — CRM DB se nyní zálohuje.
+- `find` v sekci konfigy doplněn o `-name "Caddyfile"` — routing config se nyní zálohuje.
+- Ověřeno: `pg_dump crm_identity` projde (24K), `find` bere `./caddy/Caddyfile`.
+- Záloha originálu skriptu: `/opt/nuart-backup.sh.bak-20260630`.
+- Změny se projeví v nejbližším běhu (`nuart-backup.timer`, ~03:00), nebo lze spustit ručně
+  `sudo /opt/nuart-backup.sh`.
 
 ## Proxmox VM/LXC zálohy (vzdump) — NEEXISTUJÍ ⚠️
 Ověřeno na `pve` 2026-06-30: `/etc/pve/jobs.cfg` prázdné (žádné backup joby),
@@ -41,15 +43,12 @@ Ověřeno na `pve` 2026-06-30: `/etc/pve/jobs.cfg` prázdné (žádné backup jo
 - Skript je **starší než část současného stavu** — pravděpodobně nikdo nedoplnil nové věci
   (proto chybí `crm_identity`). Plán rozšíření (v rámci 5 GB) níže.
 
-## 📋 Plán rozšíření zálohy (TODO — dokončit po projití všeho)
-Klíčové věci k doplnění do `/opt/nuart-backup.sh` (vše malé, vejde se do 5 GB):
-- [ ] **`crm_identity`** do `PG_DBS` (CRM Core DB — teď úplně mimo zálohu) — **priorita 1**
-- [ ] **Caddyfile** (`/opt/stacks/caddy/Caddyfile`) — **NEzálohuje se** (skript bere jen
-      `compose.yaml` + `.env` + `*.env`, ne `Caddyfile`). Routing/TLS config mimo zálohu — **priorita 1**
-- [ ] (zvážit) `infra/initdb/` (init SQL pro Postgres) — taky se nebere
+## 📋 Zbývající náměty (nice-to-have, v rámci 5 GB)
+- [x] ~~`crm_identity` do `PG_DBS`~~ ✅ hotovo 2026-06-30
+- [x] ~~`Caddyfile` do zálohy konfigů~~ ✅ hotovo 2026-06-30
+- [ ] (zvážit) `infra/initdb/` (init SQL pro Postgres) — zatím se nebere
 - [ ] (zvážit) Windrose `windrose_plus.json` / server config, pokud je důležitý
-- [ ] `.env` nových stacků se berou OK (`find -maxdepth 2` je pokrývá)
-> Po projití zbytku TODO sem doplnit finální seznam a případně upravit skript.
+- [ ] (zvážit) Proxmox `vzdump` job pro celé image VM/LXC (pozor na místo na `/`)
 
 ## Ostatní
 - Windrose svět: auto-save každých 60 s (herní mechanika) + konfig je v zálohovaných stacích.
