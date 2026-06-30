@@ -35,8 +35,8 @@
 | openwebui | healthy | 3000→8080 |
 | dockge | healthy | 5001 |
 | autoheal | healthy | — |
-| buildx_buildkit_nuart-builder0 | up | sdílený build helper (nuart-builder) |
-| valheim | Exited (7 dní) | starý/odstavený herní stack `[OVĚŘIT: zrušit?]` |
+| buildx_buildkit_nuart-builder0 | up | sdílený build helper (nuart-builder); v MOTD jako `nuart-builder` |
+| valheim | Exited (záměrně) | herní stack, ZÁMĚRNĚ vyplý kvůli úspoře energie (jiná hra než windrose, hraje se jen jedna; startuje se on-demand). NEMAZAT. |
 
 `[opraveno proti realitě 2026-06-30: dump neuváděl kontejner `valheim` (odstavený)
  ani buildx buildkit kontejner]`
