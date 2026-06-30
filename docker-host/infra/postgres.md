@@ -22,7 +22,9 @@
 
 ## Bezpečnost / secrets
 - Hesla v `.env` jednotlivých stacků (`DATABASE_URL`), NE v repu.
-- ⚠️ `[OVĚŘIT/TODO]` Heslo `postgres` historicky uniklo do chatu → doporučeno **rotovat**
-  (interní služba, ne katastrofa, ale udělat).
+- ℹ️ Heslo `postgres` (superuser) historicky uniklo do chatu. **Rozhodnuto 2026-06-30: NEřešit**
+  — vyhodnoceno jako nízké riziko (služba je interní/neveřejná, aplikace jezdí přes dedikované
+  uživatele `nuart_user`/`nicotrans_user`/`crm_user`, zálohy přes `docker exec` = lokální socket).
+  Vědomě akceptováno. `[opraveno proti realitě 2026-06-30: dump to vedl jako TODO „rotovat"]`
 - ⚠️ SPOF: jeden sdílený Postgres pro víc modulů — kompenzováno dedikovanými DB uživateli
   (viz `decisions/003-sdilena-infra.md`).

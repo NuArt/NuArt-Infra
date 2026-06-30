@@ -23,6 +23,15 @@ Nicotrans CRM Core — centrální správa uživatelů a práv nad moduly. **LIV
 ## Deploy
 - Migrace + seed přes `--profile tools`, pak `up -d --build app`.
 
-## Otevřené / `[OVĚŘIT]`
-- Finální login potvrzen? Admin heslo změněno z iniciálního seedu? — nešlo ověřit bez přihlášení.
+## Stav účtů (ověřeno 2026-06-30 v `crm_identity`)
+- **Login funguje** ✅ — 3 sessions, poslední 2026-06-30 11:51.
+- **1 uživatel (admin):** `daniel.habrda@nuart.cz` (`is_admin`), vytvořen 2026-06-29 seedem.
+- Registrovaný modul: `pallets`; role: „Plný přístup".
+- ⚠️ **Admin heslo je STÁLE seed heslo** — `users.updated_at == created_at`, záznam se od
+  seedu nezměnil. Tzn. běží na `ADMIN_PASSWORD` z `.env` (plaintext, zálohováno na Wedos).
+  `[TODO: změnit admin heslo v aplikaci; poté ADMIN_PASSWORD v .env už neplatí (seed jen při initu)]`
+  `[opraveno proti realitě 2026-06-30: dump měl „[OVĚŘIT login/heslo]" — login OK, heslo NEzměněno]`
+
+## Související
 - `incidenty/crm-caddy-blok.md` — Caddy blok pro crm se historicky musel vložit ručně.
+- ⚠️ DB `crm_identity` se zatím **nezálohuje** (viz `proxmox/zalohy.md`).

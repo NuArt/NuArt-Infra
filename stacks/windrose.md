@@ -12,10 +12,12 @@ Dedikovaný herní server Windrose + mod **Windrose+** (komunitní hraní). Izol
 - **Image:** indifferentbroccoli (Steam app 4129620)
 
 ## Windrose+ mod
-- Verze v1.3.14 (UE4SS + PAK) `[OVĚŘIT verzi]`
+- Verze **v1.3.14** ✅ (UE4SS + PAK) — ověřeno `server-files/.windroseplus_version`
 - Dashboard / RCON / live-map na `http://192.168.0.199:8780` (jen LAN)
-- Config: `server-files/windrose_plus_data/windrose_plus.json` (RCON heslo, multiplikátory)
-  `[OVĚŘIT cestu: 2026-06-30 soubor na této cestě nenalezen — možná jiná cesta / nezaložen]`
+- Config: **`server-files/windrose_plus.json`** (klíče `rcon` = RCON heslo, `multipliers`)
+  `[opraveno proti realitě 2026-06-30: cesta je server-files/windrose_plus.json (ne
+   server-files/windrose_plus_data/windrose_plus.json — windrose_plus_data je adresář)]`
+- Default config šablony: `server-files/config/windrose_plus.*.default.ini` (food/entities/gear/harvest/weapons)
 - Bell limit fast-travel: jde zvednout JEN modem, co musí mít server I každý hráč
   (Windrose validuje client-side, server-only varianta neexistuje). Mod #54 přes Mod Manager.
 
