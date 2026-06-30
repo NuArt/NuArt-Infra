@@ -1,15 +1,16 @@
 # Proxmox node `pve`
 
-> **Neověřeno 2026-06-30** (z Docker VM není SSH na `pve`). Ověř na `pve`.
+> Ověřeno přímo na `pve` 2026-06-30 (`pveversion`, dashboard).
 
-- **Verze:** Proxmox VE 9.2.3 `[OVĚŘIT: mohlo se updatovat — `pveversion`]`
+- **Verze:** `pve-manager/9.2.3/d0fde103346cf89a`, kernel `6.17.13-13-pve` ✅
 - **Hostname:** `pve`
 - **Management IP:** 192.168.0.186, web UI na `:8006`
+- **Hardware (z dashboardu):** 12 jader, 31.2 GiB RAM (= 32 GB, viz `hardware.md`),
+  root disk `/` 94 GB (využito ~13 %), teplota sda ~47 °C.
 - **Přístup:**
-  - SSH: `ssh root@192.168.0.186`
-    - ⚠️ `[OVĚŘIT klíče]` Z Docker VM (192.168.0.199) tento přístup **nefunguje**
-      (2026-06-30: Permission denied, publickey/password). Klíč je nejspíš jen na
-      pracovních strojích Daniela, ne na Docker VM.
+  - SSH: `ssh root@192.168.0.186` (funguje z pracovních strojů Daniela).
+    - ⚠️ Z **Docker VM** (192.168.0.199) tento přístup **nefunguje** (Permission denied,
+      publickey/password) — klíč na Docker VM není. Proxmox příkazy proto pouští Daniel ručně.
   - Mobilně: Termius (ed25519 klíče deployované přes Proxmox web konzoli)
 
 ## Pravidlo
