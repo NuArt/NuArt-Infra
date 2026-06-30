@@ -17,7 +17,8 @@
 - **buildx (buildkit)** — SDÍLENÝ perzistentní builder `nuart-builder` na síti `web`
   (kontejner `buildx_buildkit_nuart-builder0`). Vytváří/startuje ho idempotentní
   `/opt/stacks/infra/setup-buildx.sh` (boot přes systemd `nuart-buildx.service`).
-  Žádné per-projekt buildery. Detaily v `/opt/stacks/infra/README.md`.
+  Moduly se buildí jediným skriptem `/opt/stacks/infra/build-module.sh <modul>`
+  (sám doplní secrets). Žádné per-projekt buildery. Detaily v `/opt/stacks/infra/README.md`.
 - **autoheal** — restart nezdravých kontejnerů (healthcheck-based)
 - **Konvence:** každý stack = složka v `/opt/stacks/`, vlastní `compose.yaml` + `.env`
 

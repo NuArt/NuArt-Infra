@@ -36,9 +36,10 @@ Patříš do `nuart-infra` (kořenový CLAUDE.md). Sedíš na VM 100, která bě
 - **Secrets:** `.env` v každém stacku, vždy v `.gitignore`. Nikdy necommitovat hodnoty.
 - **pip:** používat `--break-system-packages`.
 - **Build appek:** Next.js se buildí → změna kódu/configu vyžaduje `up -d --build`, ne restart.
-  Buildy NuArt modulů jdou přes SDÍLENÝ builder `nuart-builder` (`--builder nuart-builder`,
-  síť `web` + secrets `appenv`/`npmtoken`) — NEvytvářej per-projekt buildery.
-  Kanonický příkaz a setup: `/opt/stacks/infra/README.md` + `setup-buildx.sh`.
+  Buildy NuArt modulů (palety, backoffice, crm) jdou přes SDÍLENÝ builder `nuart-builder`
+  jediným skriptem `/opt/stacks/infra/build-module.sh <modul>` (sám doplní secrets appenv/npmtoken,
+  síť `web`). NEvytvářej per-projekt buildery, NEkopíruj buildx příkaz.
+  Setup builderu + detaily: `/opt/stacks/infra/README.md` + `setup-buildx.sh` (boot: systemd `nuart-buildx.service`).
 - **Terminál mrší multiline paste** → posílat příkazy po jednom, když záleží na pořadí.
 
 ## Kde jsou secrets (umístění, NE hodnoty)
