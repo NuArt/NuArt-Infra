@@ -5,8 +5,8 @@
 ## Kde běží
 - LXC 101 na Proxmoxu, **GPU passthrough** (GTX 1070, 8 GB VRAM)
 - **API:** `http://192.168.0.154:11434` (REST, bez auth, jen LAN) ✅ odpovídá
-- ⚠️ IP přes DHCP — historicky .153 → .154. `.153` už nereaguje, `.154` je aktuální.
-  `[OVĚŘIT: dostala LXC statickou IP? Pokud ne, restart ji změní — viz incidenty/ollama-ip-dhcp.md]`
+- ✅ **IP `.154` zafixována** DHCP rezervací na UniFi (2026-06-30) — historický problém se
+  změnou IP (.153 → .154) je vyřešen, už se nebude opakovat. Viz `incidenty/ollama-ip-dhcp.md`.
 
 ## Modely (ověřeno — jen TEXT)
 - `qwen3:8b` — hlavní pracant (8.2B, Q4, context 40960, umí česky, tools, thinking). ~30 tok/s na GPU.

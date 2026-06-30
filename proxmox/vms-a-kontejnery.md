@@ -14,8 +14,8 @@
 - **LXC 101 (ollama)** ✅ cores 4, memory 8192 (8 GB), `features: nesting=1,mknod=1`.
   - **GPU passthrough** ověřen: dev0–dev3 = `/dev/nvidia0`, `/dev/nvidiactl`, `/dev/nvidia-uvm`,
     `/dev/nvidia-uvm-tools` (gid=44).
-  - ⚠️ **net0 `ip=dhcp`** — statická IP STÁLE NENÍ. `[OVĚŘIT/TODO trvá: restart LXC změní IP a rozbije
-    Open WebUI + Nicotrans AI pipeline — viz `incidenty/ollama-ip-dhcp.md`]`
+  - **net0 `ip=dhcp`**, ale ✅ **IP `.154` zamčena DHCP rezervací na UniFi** (2026-06-30,
+    MAC `BC:24:11:46:DE:91`) → IP se už nebude měnit. Viz `incidenty/ollama-ip-dhcp.md`.
 - **LXC 102 (uptimekuma)** ✅ cores 1, memory 1024 (1 GB), net0 `ip=dhcp`.
   `[opraveno proti realitě 2026-06-30: hostname je `uptimekuma` (ne „Kuma"); ověřena RAM 1 GB]`
 
