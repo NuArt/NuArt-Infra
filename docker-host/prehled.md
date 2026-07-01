@@ -19,6 +19,8 @@
   `/opt/stacks/infra/setup-buildx.sh` (boot přes systemd `nuart-buildx.service`).
   Moduly se buildí jediným skriptem `/opt/stacks/infra/build-module.sh <modul>`
   (sám doplní secrets). Žádné per-projekt buildery. Detaily v `/opt/stacks/infra/README.md`.
+  `[2026-07-01: builder ZASTROPOVÁN — cpuset 2-5, strop 3 jádra, mem 6g — aby build nevyhladověl
+   živý Windrose (jádra 0-1). Viz decisions/009 + incidenty/windrose-io-contention-2026-07-01.md.]`
 - **autoheal** — restart nezdravých kontejnerů (healthcheck-based)
 - **Konvence:** každý stack = složka v `/opt/stacks/`, vlastní `compose.yaml` + `.env`
 

@@ -6,8 +6,10 @@
 Dedikovaný herní server Windrose + mod **Windrose+** (komunitní hraní). Izolovaná zátěž.
 
 - **Kontejner:** `windrose`, `network_mode: host` ✅ (NAT punch-through pro připojení přes invite kód)
-- **Limity:** `cpus: 2.0` (2 ze 4 jader — produkce má vždy 2 volné), `mem_limit: 10g` ✅
-  (komentář v compose: „produkce má chráněných 12 GB"). Viz `decisions/008-windrose-limity.md`.
+- **Limity:** `cpus: 2.0` + `cpuset: "0-1"` (pin na jádra 0-1, izolace od builderu 2-5 a produkce),
+  `mem_limit: 10g` ✅. Viz `decisions/008-windrose-limity.md` + `decisions/009-cpu-izolace-cpuset.md`.
+  `[2026-07-01: přidán cpuset 0-1 + VM bumpnuta 4→6 jader po incidentu, kdy build nicotransu sekal
+   živou hru — viz incidenty/windrose-io-contention-2026-07-01.md. Builder je pinnutý na 2-5 + zastropovaný.]`
 - **Stack:** `/opt/stacks/windrose/`
 - **Image:** indifferentbroccoli (Steam app 4129620)
 

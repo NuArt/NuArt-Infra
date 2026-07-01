@@ -18,9 +18,9 @@ Vše, co běží v `docker-host/` a `stacks/`, stojí fyzicky na téhle vrstvě.
 ## Klíčová fakta
 - **Node:** `pve` @ 192.168.0.186:8006, SSH `root@192.168.0.186`
 - **Stroj:** ASUS Z10PA-U8, Xeon E5-1650 v4 (6c/12t), GTX 1070 8GB, SSD 1.92TB, 32GB RAM
-- **VM/LXC:** 100=docker (4c/20GB), 101=Ollama (4c/8GB, GPU passthrough), 102=Kuma (1c)
+- **VM/LXC:** 100=docker (**6c**/20GB), 101=Ollama (4c/8GB, GPU passthrough), 102=Kuma (1c)
 - **ISP:** Starnet, veřejná IP 178.255.174.235 (1:1 NAT), gateway UCG-Fiber
-- **CPU:** 12 threadů, rozdáno 9 vCPU (overcommit OK, reálný load nízký)
+- **CPU:** 12 threadů, rozdáno 11 vCPU (Docker 6 + Ollama 4 + Kuma 1; overcommit OK, reálný load nízký)
 
 ## Pravidla pro tuto úroveň
 - **qm/pct příkazy** běží JEN tady (na `pve`), NE na Docker VM. Před každým zkontroluj
