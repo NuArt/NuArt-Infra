@@ -15,11 +15,12 @@ Patříš do `nuart-infra` (kořenový CLAUDE.md). Sedíš na VM 100, která bě
 - `infra/postgres.md`, `infra/minio.md` — sdílená infra
 
 ## Klíčová fakta (ověřeno 2026-06-30)
-- **Host:** `docker` @ 192.168.0.199, Debian 12, `ssh nuart-docker` (endy) / `ssh root@...`
+- **Host:** `docker` @ 192.168.0.199, Debian 12, `ssh nuart-docker` (endy + sudo; root login vypnutý — viz SSH níže)
 - **Docker:** 29.6.0, Compose v5.1.4. RAM VM ~20 GB.
 - **Stacky:** `/opt/stacks/<nazev>/` (compose.yaml + .env). Dockge běží z `/opt/dockge` (:5001).
 - **Síť:** `web` (external) — kontejnery se vidí jménem (např. `infra-postgres:5432`)
-- **Sdílená infra:** infra-postgres (DB: nuart, nicotrans, crm_identity), infra-minio (9000/9001)
+- **Sdílená infra:** infra-postgres (DB: nuart, nicotrans, crm_identity, **nicotrans_hr**, **crm_nabor**),
+  infra-minio (9000/9001) `[2026-07-02: hr + nabor DB doplněny]`
 - **Reverse proxy:** Caddy (viz `stacks/caddy.md`) — routuje na INTERNÍ port (3000)
 
 ## Konvence (shrnutí, detail v konvence.md)
@@ -43,9 +44,16 @@ Patříš do `nuart-infra` (kořenový CLAUDE.md). Sedíš na VM 100, která bě
 - **Terminál mrší multiline paste** → posílat příkazy po jednom, když záleží na pořadí.
 
 ## Kde jsou secrets (umístění, NE hodnoty)
-- DB hesla, SESSION_SECRET, AUTH secrety → `.env` v příslušném stacku
+- DB hesla, SESSION_SECRET, AUTH secrety → `.env` v příslušném stacku (**chmod 600**, sjednoceno 2026-07-02)
+- `.npmtoken` (read:packages PAT pro @nuart/*) → v příslušném stacku (chmod 600)
 - RCON heslo Windrose+ → `server-files/windrose_plus_data/` (viz `stacks/windrose.md`)
 - GitHub přístup → SSH klíč `~/.ssh/id_ed25519` (registrovaný jako „NuArt Docker Server")
+- Wedos rsync heslo (zálohy) → `/root/.wedos-pass` (chmod 600)
+
+## SSH (zpevněno 2026-07-02, audit)
+- Přístup **jen přes publickey** jako `endy` + `sudo` (NOPASSWD). Config `/etc/ssh/sshd_config.d/10-hardening.conf`:
+  `PasswordAuthentication no`, `PermitRootLogin no`, `KbdInteractiveAuthentication no`.
+- SSH není dostupné z internetu (port forward jen 80/443 na Caddy). Root login se od 25.6. nepoužívá.
 
 ## Co ověřit (drift)
 - Host port mappingy (`docker ps`), seznam kontejnerů (`docker ps -a`)

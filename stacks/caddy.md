@@ -11,16 +11,20 @@ Jediný veřejný vstup. Routuje podle domény na **interní port** kontejneru (
 - **Reload:** `docker exec caddy caddy reload --config /etc/caddy/Caddyfile`
 - **Logy:** `/var/log/caddy/<sluzba>.log` (uvnitř kontejneru), roll 10mb / keep 5
 
-## Domény (reálný Caddyfile, ověřeno 2026-06-30)
+## Domény (reálný Caddyfile, ověřeno 2026-07-02)
 | Doména / cesta | Cíl |
 |---|---|
 | `office.nuart.cz` | `nuart-backoffice:3000` |
 | `crm.nuart.cz/palety`, `/palety/*` | `nicotrans-palety:3000` (basePath, prefix se NEstripuje) |
+| `crm.nuart.cz/hr`, `/hr/*` | `nicotrans-hr:3000` ➕ 2026-07-01 |
+| `crm.nuart.cz/nabor`, `/nabor/*` | `nicotrans-nabor:3000` ➕ 2026-07-01 |
 | `crm.nuart.cz` (vše ostatní) | `nicotrans-crm:3000` (login, portál, admin) |
 
 `[opraveno proti realitě 2026-06-30: dump měl jen „crm.nuart.cz → nicotrans-crm (root, BASE_PATH prázdné)";
  reálně crm.nuart.cz navíc routuje /palety/* na nicotrans-palety (path-based, Next basePath).
  Tím je palety nově VYSTAVENO veřejně — viz stacks/nicotrans-palety.md]`
+`[2026-07-02: přibyly moduly /hr (nicotrans-hr) a /nabor (nicotrans-nabor), stejný path-based vzor
+ jako /palety — všechny sdílí identitu přes crm_identity + CORE_URL na crm.nuart.cz]`
 
 > ⚠️ Komentář v hlavičce Caddyfile („vystavujeme VÝHRADNĚ office.nuart.cz") je **zastaralý** —
 > crm.nuart.cz blok existuje pod ním. `[OVĚŘIT/uklidit komentář]`

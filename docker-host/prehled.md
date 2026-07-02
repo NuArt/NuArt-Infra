@@ -21,16 +21,21 @@
   (sám doplní secrets). Žádné per-projekt buildery. Detaily v `/opt/stacks/infra/README.md`.
   `[2026-07-01: builder ZASTROPOVÁN — cpuset 2-5, strop 3 jádra, mem 6g — aby build nevyhladověl
    živý Windrose (jádra 0-1). Viz decisions/009 + incidenty/windrose-io-contention-2026-07-01.md.]`
+  `[2026-07-02: build cache dostala GC STROP maxUsedSpace=15GB (buildkitd.toml přes --config
+   v setup-buildx.sh) — dřív rostla bez limitu (audit našel ~35 GB). Buildkit maže nejstarší
+   vrstvy nad strop. Jednorázově uvolněno ~22 GB (image prune + rekreace builderu).]`
 - **autoheal** — restart nezdravých kontejnerů (healthcheck-based)
 - **Konvence:** každý stack = složka v `/opt/stacks/`, vlastní `compose.yaml` + `.env`
 
-## Běžící kontejnery (snapshot 2026-06-30)
+## Běžící kontejnery (snapshot 2026-07-02)
 | Kontejner | Stav | Pozn. |
 |---|---|---|
 | caddy | healthy | reverse proxy 80/443 |
 | nuart-backoffice | healthy | 3020→3000 |
 | nicotrans-crm | healthy | 3000 (bez host mappingu) |
-| nicotrans-palety | healthy | 3010→3000 |
+| nicotrans-palety | healthy | 3010→3000, crm.nuart.cz/palety |
+| nicotrans-hr | healthy | 3030→3000, crm.nuart.cz/hr ➕ 2026-07-01 |
+| nicotrans-nabor | healthy | 3040→3000, crm.nuart.cz/nabor ➕ 2026-07-01 |
 | windrose | healthy | network_mode host |
 | infra-postgres | healthy | 5432 |
 | infra-minio | healthy | 9000-9001 |

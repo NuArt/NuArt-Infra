@@ -13,6 +13,8 @@ Caddy = jediný vstup pro veřejné HTTPS. Routuje podle domény na **INTERNÍ p
 | nuart-backoffice | 3000 | 3020 | office.nuart.cz | ✅ |
 | nicotrans-crm | 3000 | — (bez mappingu) | crm.nuart.cz | ✅ |
 | nicotrans-palety | 3000 | 3010 | crm.nuart.cz/palety | ✅ viz pozn. níže |
+| nicotrans-hr | 3000 | 3030 | crm.nuart.cz/hr | ➕ 2026-07-01 |
+| nicotrans-nabor | 3000 | 3040 | crm.nuart.cz/nabor | ➕ 2026-07-01 |
 | infra-postgres | 5432 | — | ne | ✅ |
 | infra-minio | 9000 / 9001 | 9000 / 9001 | ne (LAN) | ✅ API + konzole |
 | openwebui | **8080** | **3000** | ne | ✅ viz pozn. níže |
@@ -28,3 +30,6 @@ Caddy = jediný vstup pro veřejné HTTPS. Routuje podle domény na **INTERNÍ p
   JE interní 3000, host 3010, a navíc **vystaveno veřejně** pod crm.nuart.cz/palety přes Caddy
   (Next basePath, prefix se NEstripuje) — detail stacks/caddy.md a stacks/nicotrans-palety.md]`
 - `[opraveno proti realitě 2026-06-30: infra-minio má host mapping 9000-9001 (ne jen interní)]`
+- `[2026-07-01: přibyly moduly nicotrans-hr (3030 → crm.nuart.cz/hr) a nicotrans-nabor
+  (3040 → crm.nuart.cz/nabor); stejný path-based vzor jako palety — viz stacks/nicotrans-hr.md,
+  stacks/nicotrans-nabor.md, stacks/caddy.md]`
