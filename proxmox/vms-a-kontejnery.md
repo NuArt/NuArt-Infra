@@ -38,9 +38,23 @@ reálný load hostitele velmi nízký). vCPU nejsou napevno, sdílejí se.
 | 5 | Nicotrans CRM (crm.nuart.cz) | HTTP(s) | https://crm.nuart.cz | ➕ 2026-06-30 (Caddy + TLS; pokrývá i /palety) |
 | 6 | Nicotrans palety | HTTP | http://192.168.0.199:3010/ | interní check modulu |
 | 7 | Ollama (LXC 101) | HTTP keyword „Ollama" | http://192.168.0.154:11434 | ➕ 2026-06-30 (chytí i změnu DHCP IP) |
+| 8 | Off-site záloha (Wedos) | **Push** | heartbeat z `/opt/nuart-backup.sh` | 🔜 2026-07-02, čeká na ruční vytvoření v UI (postup níže) |
 
 `[opraveno proti realitě 2026-06-30: dump měl „[OVĚŘIT co monitoruje]". Nejdřív byly 4 monitory
  (interní), poté doplněny #4/#5/#7 — CRM, veřejné domény přes Caddy (TLS) a Ollama.]`
+
+### Monitor #8 — push z noční zálohy (nastavit ručně v Kuma UI)
+Skript `/opt/nuart-backup.sh` už umí odeslat heartbeat na konci úspěšného běhu (sekce 8):
+čte push URL z `/root/.kuma-backup-push`; když soubor chybí, push se přeskočí. Aktivace:
+1. Kuma UI (http://192.168.0.158:3001) → **Add New Monitor**.
+2. **Monitor Type: Push**; Friendly Name „Off-site záloha (Wedos)".
+3. **Heartbeat Interval: 93600** s (= 26 h — záloha běží denně ~03:00, tohle dá rezervu).
+   **Retries: 0** (nebo 1). Volitelně nastav notifikaci (viz „mezery" níže).
+4. Ulož → Kuma vygeneruje **Push URL** (`http://192.168.0.158:3001/api/push/<TOKEN>`).
+5. Na Docker VM ulož jen tu URL do souboru (root, chmod 600):
+   `echo 'http://192.168.0.158:3001/api/push/<TOKEN>' | sudo tee /root/.kuma-backup-push >/dev/null && sudo chmod 600 /root/.kuma-backup-push`
+6. Test: `sudo systemctl start nuart-backup.service` → v Kumě naskočí „up", v logu `Kuma push OK`.
+Když záloha spadne (fail), heartbeat nedorazí → Kuma po 26 h upozorní (řeší „tichou smrt" zálohy).
 
 ### Zbývající mezery (volitelné)
 - **infra-postgres (5432)** nelze monitorovat z Kumy — nemá host mapping, je dosažitelný jen
