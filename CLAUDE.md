@@ -10,7 +10,7 @@ kdokoliv (člověk i AI agent) měl po přečtení úplný obraz a mohl bezpečn
 
 ## Úrovně (čti shora dolů podle potřeby)
 1. **proxmox/** — fyzický stroj + hypervizor. VM a kontejnery, síť, ISP, zálohy.
-2. **docker-host/** — Docker VM (192.168.0.199), sdílená infra, konvence, mapa portů.
+2. **docker-host/** — Docker VM (10.3.20.199), sdílená infra, konvence, mapa portů.
 3. **stacks/** — jednotlivé aplikace (jeden soubor na stack).
 4. **ai/** — lokální AI (Ollama, Nicotrans AI pipeline).
 5. **decisions/** — ADR: PROČ jsou věci tak, jak jsou.
@@ -24,9 +24,11 @@ kdokoliv (člověk i AI agent) měl po přečtení úplný obraz a mohl bezpečn
 - **„Jak se připojit / kde jsou secrets?"** → `docker-host/CLAUDE.md` (umístění, NE hodnoty)
 - **„Síť / domény / porty"** → `proxmox/sit.md` + `docker-host/porty.md` + `stacks/caddy.md`
 
-## Klíčová fakta (rychlý přehled, ověřeno 2026-06-30)
-- **Proxmox:** `pve` @ 192.168.0.186:8006
-- **Docker host:** `docker` @ 192.168.0.199 (`ssh nuart-docker`), stacky v `/opt/stacks/`
+## Klíčová fakta (rychlý přehled, ověřeno 2026-06-30; IP dorovnány 2026-07-22)
+- **Síť:** LAN **10.3.20.0/24**, GW/DNS `10.3.20.1` `[2026-07-22: renumbering z 192.168.0.0/24
+  → 10.3.20.0/24, poslední oktety zachovány. Detaily a důvod viz `proxmox/sit.md`.]`
+- **Proxmox:** `pve` @ 10.3.20.186:8006
+- **Docker host:** `docker` @ 10.3.20.199 (`ssh nuart-docker`), stacky v `/opt/stacks/`
 - **Reverse proxy:** Caddy, automatické HTTPS, routuje na INTERNÍ port kontejneru (3000)
 - **Veřejná IP:** 178.255.174.235 (Starnet), DNS na Wedos, domény *.nuart.cz
 - **Sdílená infra:** infra-postgres, infra-minio (síť `web`)

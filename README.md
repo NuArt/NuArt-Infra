@@ -14,7 +14,7 @@ Začni souborem [CLAUDE.md](CLAUDE.md) — je to mapa celého repa.
 | Složka | Obsah |
 |---|---|
 | `proxmox/` | Fyzický stroj + hypervizor (VM/LXC, síť, ISP, zálohy) |
-| `docker-host/` | Docker VM 192.168.0.199 (konvence, mapa portů, sdílená infra) |
+| `docker-host/` | Docker VM 10.3.20.199 (konvence, mapa portů, sdílená infra) |
 | `stacks/` | Jeden soubor na aplikační stack (caddy, backoffice, crm, palety, windrose…) |
 | `ai/` | Lokální AI — Ollama, Nicotrans AI pipeline |
 | `decisions/` | ADR — architektonická rozhodnutí a jejich důvody |

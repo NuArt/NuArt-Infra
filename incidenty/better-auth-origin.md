@@ -11,7 +11,7 @@ Login házel „Nesprávný e-mail nebo heslo", reálná příčina v logu:
 ## Fix
 1. `.env`: `BETTER_AUTH_URL="https://office.nuart.cz"` (bez portu, Caddy řeší 443)
 2. `src/lib/auth/auth.ts`: `trustedOrigins` musí obsahovat všechny adresy
-   (`https://office.nuart.cz` + `http://192.168.0.199:3020` + `http://localhost:3020`)
+   (`https://office.nuart.cz` + `http://10.3.20.199:3020` + `http://localhost:3020`)
 3. **REBUILD** (`docker compose up -d --build`), ne jen restart — Next.js se buildí.
 4. Ověřit log: žádné „Invalid origin".
 

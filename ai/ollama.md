@@ -1,10 +1,10 @@
 # Ollama (lokální AI)
 
-> Ověřeno 2026-06-30 (ping 192.168.0.154, `GET /api/tags`).
+> Ověřeno 2026-06-30 (ping 10.3.20.154, `GET /api/tags`).
 
 ## Kde běží
 - LXC 101 na Proxmoxu, **GPU passthrough** (GTX 1070, 8 GB VRAM)
-- **API:** `http://192.168.0.154:11434` (REST, bez auth, jen LAN) ✅ odpovídá
+- **API:** `http://10.3.20.154:11434` (REST, bez auth, jen LAN) ✅ odpovídá
 - ✅ **IP `.154` zafixována** DHCP rezervací na UniFi (2026-06-30) — historický problém se
   změnou IP (.153 → .154) je vyřešen, už se nebude opakovat. Viz `incidenty/ollama-ip-dhcp.md`.
 

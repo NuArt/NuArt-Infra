@@ -14,17 +14,23 @@
 
 ## Port forwardy (UCG-Fiber)
 Ověřeno (dle dumpu), nepřímo potvrzeno tím, že veřejné HTTPS funguje:
-- `caddy-http`  : 80  → 192.168.0.199:80
-- `caddy-https` : 443 → 192.168.0.199:443
+- `caddy-http`  : 80  → 10.3.20.199:80
+- `caddy-https` : 443 → 10.3.20.199:443
 
 Caddy = jediný veřejný vstup. HTTP-01 ACME challenge potřebuje port 80 → forward 80 je nutný.
 
 ## LAN
-- Rozsah: **192.168.0.0/24** (NuArt-Staff VLAN) — aktuální stav (ověřeno 2026-06-30:
-  pve .186, docker .199, ollama .154, kuma .158).
-- 📋 **Plánovaný subnet renumbering → 10.44.10.0/24** — STÁLE V PLÁNU (potvrzeno 2026-06-30).
-  **Motivace:** vyřešit konflikt IP rozsahu s VPN (192.168.0.0/24 je moc běžný → kolize jinde).
-  Čeká se na vhodný čas, aby to neovlivnilo nikoho práci. `[TODO: provést]`
+- Rozsah: **10.3.20.0/24** (NuArt-Staff VLAN), gateway/DNS `10.3.20.1` (UniFi UCG-Fiber).
+  Aktuální stav: pve `.186`, docker `.199`, ollama `.154`, kuma `.158` (poslední oktety zachovány).
+- ✅ **Subnet renumbering PROVEDEN** `192.168.0.0/24 → 10.3.20.0/24`.
+  `[2026-07-22: renumbering hotový a dokumentace dorovnána proti realitě (ip addr, ip route,
+   živé probe na pve/ollama/kuma). POZOR: původně se plánoval rozsah 10.44.10.0/24 (viz níže),
+   nakonec se přešlo na 10.3.20.0/24. Prefix se změnil 192.168.0 → 10.3.20, poslední oktety
+   zůstaly stejné. Ověřené nové IP: pve 10.3.20.186:8006, docker 10.3.20.199, ollama
+   10.3.20.154:11434, kuma 10.3.20.158:3001, GW 10.3.20.1.]`
+  **Motivace (proč se měnilo):** konflikt IP rozsahu s VPN — `192.168.0.0/24` je moc běžný
+  a kolidoval se stejným rozsahem jinde (veřejné sítě/kavárny). Renumbering to vyřešil.
+  `[pozn.: v plánu byl 10.44.10.0/24, realita je 10.3.20.0/24 — plán se změnil při provedení.]`
 
 ## DNS
 - Doména `nuart.cz`, registrátor/správa **Wedos**. ⚠️ Živé MX záznamy — **nerozbít**.

@@ -16,7 +16,8 @@ Vše, co běží v `docker-host/` a `stacks/`, stojí fyzicky na téhle vrstvě.
 - `zalohy.md` — vzbackup joby
 
 ## Klíčová fakta
-- **Node:** `pve` @ 192.168.0.186:8006, SSH `root@192.168.0.186`
+- **Node:** `pve` @ 10.3.20.186:8006, SSH `root@10.3.20.186`
+  `[2026-07-22: síť přečíslována 192.168.0.0/24 → 10.3.20.0/24 (oktety zachovány), viz `sit.md`]`
 - **Stroj:** ASUS Z10PA-U8, Xeon E5-1650 v4 (6c/12t), GTX 1070 8GB, SSD 1.92TB, 32GB RAM
 - **VM/LXC:** 100=docker (**6c**/20GB), 101=Ollama (4c/8GB, GPU passthrough), 102=Kuma (1c)
 - **ISP:** Starnet, veřejná IP 178.255.174.235 (1:1 NAT), gateway UCG-Fiber

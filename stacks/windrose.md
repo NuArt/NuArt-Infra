@@ -15,7 +15,7 @@ Dedikovaný herní server Windrose + mod **Windrose+** (komunitní hraní). Izol
 
 ## Windrose+ mod
 - Verze **v1.3.14** ✅ (UE4SS + PAK) — ověřeno `server-files/.windroseplus_version`
-- Dashboard / RCON / live-map na `http://192.168.0.199:8780` (jen LAN)
+- Dashboard / RCON / live-map na `http://10.3.20.199:8780` (jen LAN)
 - Config: **`server-files/windrose_plus.json`** (klíče `rcon` = RCON heslo, `multipliers`)
   `[opraveno proti realitě 2026-06-30: cesta je server-files/windrose_plus.json (ne
    server-files/windrose_plus_data/windrose_plus.json — windrose_plus_data je adresář)]`

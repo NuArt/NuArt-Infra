@@ -9,7 +9,7 @@ Webové UI k lokální Ollama (LXC 101).
   `[opraveno proti realitě 2026-06-30: dump měl „interní port 3000, host mapping ?";
    reálně interní 8080, host 3000]`
 - **Stack:** `/opt/stacks/openwebui/`
-- **Napojení na Ollama:** `http://192.168.0.154:11434`
+- **Napojení na Ollama:** `http://10.3.20.154:11434`
 - Nevystaveno veřejně (jen LAN).
 
 ## Úskalí

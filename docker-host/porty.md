@@ -1,6 +1,7 @@
-# Mapa portů (Docker host 192.168.0.199)
+# Mapa portů (Docker host 10.3.20.199)
 
 > Ověřeno 2026-06-30 (`docker ps --format "table {{.Names}}\t{{.Ports}}"`).
+> `[2026-07-22: IP dorovnány po renumberingu sítě 192.168.0.0/24 → 10.3.20.0/24, viz `proxmox/sit.md`]`
 
 ## Reverse proxy model
 Caddy = jediný vstup pro veřejné HTTPS. Routuje podle domény na **INTERNÍ port kontejneru**
@@ -19,9 +20,10 @@ Caddy = jediný vstup pro veřejné HTTPS. Routuje podle domény na **INTERNÍ p
 | infra-minio | 9000 / 9001 | 9000 / 9001 | ne (LAN) | ✅ API + konzole |
 | openwebui | **8080** | **3000** | ne | ✅ viz pozn. níže |
 | dockge | 5001 | 5001 | ne | ✅ |
+| wol-dashboard | host net | 5050 (host net) | ne (LAN) | ➕ 2026-07-22 — WoL dashboard |
 | windrose | host net | host net | herní porty + 8780 (LAN dashboard) | ✅ |
-| Ollama (LXC 101) | 11434 | – | ne (LAN) | @192.168.0.154 |
-| Uptime Kuma (LXC 102) | 3001 | – | ne (LAN) | @192.168.0.158 `[OVĚŘIT]` |
+| Ollama (LXC 101) | 11434 | – | ne (LAN) | @10.3.20.154 |
+| Uptime Kuma (LXC 102) | 3001 | – | ne (LAN) | @10.3.20.158 `[OVĚŘIT]` |
 
 ## Opravy proti dumpu
 - `[opraveno proti realitě 2026-06-30: openwebui — bylo „interní port 3000", JE interní **8080**,
@@ -33,3 +35,5 @@ Caddy = jediný vstup pro veřejné HTTPS. Routuje podle domény na **INTERNÍ p
 - `[2026-07-01: přibyly moduly nicotrans-hr (3030 → crm.nuart.cz/hr) a nicotrans-nabor
   (3040 → crm.nuart.cz/nabor); stejný path-based vzor jako palety — viz stacks/nicotrans-hr.md,
   stacks/nicotrans-nabor.md, stacks/caddy.md]`
+- `[2026-07-22: přibyl wol-dashboard — Flask WoL dashboard, host network, port 5050,
+  jen LAN (http://10.3.20.199:5050), NENÍ za Caddy. Viz stacks/wol-dashboard.md]`

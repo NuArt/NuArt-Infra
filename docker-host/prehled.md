@@ -3,10 +3,10 @@
 > Ověřeno na hostu 2026-06-30 (`hostname`, `docker --version`, `docker ps -a`, `free -h`).
 
 ## Základ
-- **OS:** Debian 12. Hostname `docker`, IP 192.168.0.199
+- **OS:** Debian 12. Hostname `docker`, IP 10.3.20.199
 - **Docker:** 29.6.0, Compose v5.1.4 ✅
 - **RAM:** ~20 GB (navyšováno 8→10→20 kvůli Windrose) ✅ (`free -h` → 19Gi total)
-- **Přístup:** `ssh nuart-docker` (alias, endy@docker) nebo `ssh root@192.168.0.199`
+- **Přístup:** `ssh nuart-docker` (alias, endy@docker) nebo `ssh root@10.3.20.199`
 - **pip:** není defaultně — doinstalován `python3-pip`; balíky s `--break-system-packages`
 
 ## Docker prostředí

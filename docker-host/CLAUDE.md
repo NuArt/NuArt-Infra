@@ -1,4 +1,4 @@
-# CLAUDE.md — docker-host/ (Docker VM 192.168.0.199)
+# CLAUDE.md — docker-host/ (Docker VM 10.3.20.199)
 
 > Úroveň aplikačního hostu. Tady běží produkční stacky + sdílená infra.
 > Na rozdíl od `proxmox/` se tu reálně pracuje (deploy, build, restart kontejnerů),
@@ -14,8 +14,9 @@ Patříš do `nuart-infra` (kořenový CLAUDE.md). Sedíš na VM 100, která bě
 - `porty.md` — kompletní mapa portů (interní vs host)
 - `infra/postgres.md`, `infra/minio.md` — sdílená infra
 
-## Klíčová fakta (ověřeno 2026-06-30)
-- **Host:** `docker` @ 192.168.0.199, Debian 12, `ssh nuart-docker` (endy + sudo; root login vypnutý — viz SSH níže)
+## Klíčová fakta (ověřeno 2026-06-30; IP dorovnány 2026-07-22)
+- **Host:** `docker` @ 10.3.20.199, Debian 12, `ssh nuart-docker` (endy + sudo; root login vypnutý — viz SSH níže)
+  `[2026-07-22: síť přečíslována 192.168.0.0/24 → 10.3.20.0/24, viz `proxmox/sit.md`]`
 - **Docker:** 29.6.0, Compose v5.1.4. RAM VM ~20 GB.
 - **Stacky:** `/opt/stacks/<nazev>/` (compose.yaml + .env). Dockge běží z `/opt/dockge` (:5001).
 - **Síť:** `web` (external) — kontejnery se vidí jménem (např. `infra-postgres:5432`)
